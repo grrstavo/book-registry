@@ -10,10 +10,10 @@ readonly class AssuntoDTO
      * Create a new AssuntoDTO instance.
      *
      * @param int|null $codAs
-     * @param string $Descricao
+     * @param string $descricao
      */
     public function __construct(
-        public string $Descricao,
+        public string $descricao,
         public int|null $codAs = null
     ) {
     }
@@ -26,7 +26,7 @@ readonly class AssuntoDTO
     public function toAssunto(): Assunto
     {
         return new Assunto([
-            'Descricao' => $this->Descricao
+            'Descricao' => $this->descricao
         ]);
     }
 }

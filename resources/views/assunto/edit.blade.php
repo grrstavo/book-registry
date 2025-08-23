@@ -10,7 +10,7 @@
     <form action="{{ route('assuntos.update', $assunto->codAs) }}" method="POST">
         @csrf
         @method('PUT')
-        <x-adminlte-input name="Descricao" label="Descrição" placeholder="Digite a descrição" value="{{ $assunto->Descricao }}"/>
+        <x-adminlte-input name="descricao" label="Descrição" placeholder="Digite a descrição" value="{{ $assunto->Descricao }}"/>
         <x-adminlte-button class="btn-flat" type="submit" label="Salvar" theme="success" icon="fas fa-lg fa-save"/>
     </form>
 

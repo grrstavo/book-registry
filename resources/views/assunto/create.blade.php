@@ -9,7 +9,7 @@
 @section('content')
     <form action="{{ route('assuntos.store') }}" method="POST">
         @csrf
-        <x-adminlte-input name="Descricao" label="Descrição" placeholder="Digite a descrição" value="{{ old('descricao') }}"/>
+        <x-adminlte-input name="descricao" label="Descrição" placeholder="Digite a descrição" value="{{ old('descricao') }}"/>
         <x-adminlte-button class="btn-flat" type="submit" label="Salvar" theme="success" icon="fas fa-lg fa-save"/>
     </form>
 

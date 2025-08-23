@@ -5,7 +5,6 @@ use BookRegistry\Assunto\Domain\DTO\AssuntoDTO;
 use BookRegistry\Assunto\Domain\Model\Assunto;
 use BookRegistry\Assunto\Domain\Repository\AssuntoRepository;
 use BookRegistry\Assunto\Domain\Repository\AssuntoRepositoryInterface;
-use DomainException;
 
 beforeEach(function () {
     $this->mockRepositoryInterface = Mockery::mock(AssuntoRepositoryInterface::class);
@@ -18,7 +17,7 @@ afterEach(function () {
 });
 
 it('should create an assunto', function () {
-    $dto = new AssuntoDTO(Descricao: 'Descricao do Assunto');
+    $dto = new AssuntoDTO(descricao: 'Descricao do Assunto');
 
     $this->mockRepository
         ->shouldReceive('create')
@@ -32,7 +31,7 @@ it('should create an assunto', function () {
 });
 
 it('should throw exception when Assunto has existing codAs', function () {
-    $dto = new AssuntoDTO(codAs: 1, Descricao: 'Test Subject Description');
+    $dto = new AssuntoDTO(codAs: 1, descricao: 'Test Subject Description');
 
     $this->mockRepository
         ->shouldReceive('create')

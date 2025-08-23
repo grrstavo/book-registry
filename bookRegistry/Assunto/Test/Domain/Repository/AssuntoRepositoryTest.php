@@ -3,7 +3,6 @@
 use BookRegistry\Assunto\Domain\Model\Assunto;
 use BookRegistry\Assunto\Domain\Repository\AssuntoRepository;
 use BookRegistry\Assunto\Domain\Repository\AssuntoRepositoryInterface;
-use DomainException;
 
 beforeEach(function () {
     $this->mockRepositoryInterface = Mockery::mock(AssuntoRepositoryInterface::class);

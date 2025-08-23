@@ -23,7 +23,7 @@ class AssuntoRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'Descricao' => 'required|string|max:40',
+            'descricao' => 'required|string|max:40',
             'codAs' => 'integer|exists:assuntos,codAs'
         ];
     }
@@ -36,9 +36,9 @@ class AssuntoRequest extends FormRequest
     public function messages(): array
     {
         return [
-            'Descricao.required' => 'O campo descrição é obrigatório',
-            'Descricao.string' => 'O campo descrição deve ser uma string',
-            'Descricao.max' => 'O campo descrição deve ter no máximo 40 caracteres',
+            'descricao.required' => 'O campo descrição é obrigatório',
+            'descricao.string' => 'O campo descrição deve ser uma string',
+            'descricao.max' => 'O campo descrição deve ter no máximo 40 caracteres',
             'codAs.integer' => 'O campo código deve ser um número inteiro',
             'codAs.exists' => 'O assunto com o código informado não existe'
         ];
@@ -53,7 +53,7 @@ class AssuntoRequest extends FormRequest
     {
         return new AssuntoDTO(
             codAs: $this->route('codAs'),
-            Descricao: $this->input('Descricao')
+            descricao: $this->input('descricao')
         );
     }
 }

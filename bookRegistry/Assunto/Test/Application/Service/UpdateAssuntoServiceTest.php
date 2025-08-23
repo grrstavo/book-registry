@@ -4,8 +4,8 @@ use BookRegistry\Assunto\Application\Service\UpdateAssuntoService;
 use BookRegistry\Assunto\Domain\DTO\AssuntoDTO;
 use BookRegistry\Assunto\Domain\Model\Assunto;
 use BookRegistry\Assunto\Domain\Repository\AssuntoRepository;
-use DomainException;
-use Exception;
+// use \DomainException;
+// use \Exception;
 
 beforeEach(function () {
     $this->mockRepository = Mockery::mock(AssuntoRepository::class);
@@ -17,7 +17,7 @@ afterEach(function () {
 });
 
 it('should successfully update an existing assunto', function () {
-    $dto = new AssuntoDTO(Descricao: 'Updated Description', codAs: 1);
+    $dto = new AssuntoDTO(descricao: 'Updated Description', codAs: 1);
 
     $this->mockRepository
         ->shouldReceive('update')
@@ -34,7 +34,7 @@ it('should successfully update an existing assunto', function () {
 });
 
 it('should throw exception when codAs is zero', function () {
-    $dto = new AssuntoDTO(Descricao: 'Test Description', codAs: 0);
+    $dto = new AssuntoDTO(descricao: 'Test Description', codAs: 0);
 
     $this->mockRepository
         ->shouldReceive('update')
@@ -53,7 +53,7 @@ it('should throw exception when codAs is zero', function () {
 });
 
 it('should throw exception when assunto does not exist', function () {
-    $dto = new AssuntoDTO(Descricao: 'Non-existent Description', codAs: 999);
+    $dto = new AssuntoDTO(descricao: 'Non-existent Description', codAs: 999);
 
     $this->mockRepository
         ->shouldReceive('update')
