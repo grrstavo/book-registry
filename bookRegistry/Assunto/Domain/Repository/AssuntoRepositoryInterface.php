@@ -22,4 +22,12 @@ interface AssuntoRepositoryInterface
      * @return void
      */
     public function update(Assunto $assunto, int $codAs): void;
+
+    /**
+     * Find an Assunto by its codAs.
+     *
+     * @param int $codAs
+     * @return Assunto|null
+     */
+    public function findByCodAs(int $codAs): ?Assunto;
 }

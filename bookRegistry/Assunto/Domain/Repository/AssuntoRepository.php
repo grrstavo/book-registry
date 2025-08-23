@@ -43,7 +43,7 @@ class AssuntoRepository
             throw new DomainException('O assunto não pode ser editado pois não tem código');
         }
 
-        if (!Assunto::find($codAs)->exists()) {
+        if (!$this->repository->findByCodAs($codAs)) {
             throw new DomainException('O assunto não pode ser editado pois não existe');
         }
 

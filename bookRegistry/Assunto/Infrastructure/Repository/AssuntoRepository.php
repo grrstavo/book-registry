@@ -22,8 +22,16 @@ class AssuntoRepository implements AssuntoRepositoryInterface
      */
     public function update(Assunto $assunto, int $codAs): void
     {
-        $existingAssunto = Assunto::find($codAs);
+        $existingAssunto = $this->findByCodAs($codAs);
         $existingAssunto->Descricao = $assunto->Descricao;
         $existingAssunto->save();
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function findByCodAs(int $codAs): ?Assunto
+    {
+        return Assunto::find($codAs);
     }
 }
