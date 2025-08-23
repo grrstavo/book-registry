@@ -314,7 +314,7 @@ return [
         ],
         [
             'text' => 'Livros',
-            'url' => '/autores',
+            'url' => '/livros',
             'icon' => 'far fa-fw fa-file',
         ],
     ],
