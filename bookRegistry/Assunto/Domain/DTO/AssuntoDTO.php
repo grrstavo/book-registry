@@ -13,8 +13,8 @@ readonly class AssuntoDTO
      * @param string $Descricao
      */
     public function __construct(
-        public int|null $codAs = null,
-        public string $Descricao
+        public string $Descricao,
+        public int|null $codAs = null
     ) {
     }
 

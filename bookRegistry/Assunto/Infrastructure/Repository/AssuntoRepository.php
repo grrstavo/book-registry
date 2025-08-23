@@ -15,7 +15,7 @@ class AssuntoRepository implements AssuntoRepositoryInterface
      */
     public function create(Assunto $assunto): void
     {
-        $a = Assunto::query()->create([
+        Assunto::query()->create([
             'Descricao' => $assunto->Descricao
         ]);
     }
