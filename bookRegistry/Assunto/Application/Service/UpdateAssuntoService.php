@@ -5,7 +5,7 @@ namespace BookRegistry\Assunto\Application\Service;
 use BookRegistry\Assunto\Domain\DTO\AssuntoDTO;
 use BookRegistry\Assunto\Domain\Repository\AssuntoRepository;
 
-class CreateAssuntoService
+class UpdateAssuntoService
 {
     /**
      * @param AssuntoRepository $repository
@@ -23,6 +23,6 @@ class CreateAssuntoService
      */
     public function __invoke(AssuntoDTO $dto): void
     {
-        $this->repository->create($dto->toAssunto());
+        $this->repository->update(assunto: $dto->toAssunto(), codAs: $dto->codAs);
     }
 }

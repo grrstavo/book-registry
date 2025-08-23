@@ -8,10 +8,10 @@ use DomainException;
 class AssuntoRepository
 {
     /**
-     * @param AssuntoRepositoryInterface $dao
+     * @param AssuntoRepositoryInterface $repository
      */
     public function __construct(
-        private AssuntoRepositoryInterface $dao
+        private AssuntoRepositoryInterface $repository
     ) {
     }
 
@@ -27,6 +27,26 @@ class AssuntoRepository
             throw new DomainException('O assunto não pode ser criado pois já tem código');
         }
 
-        $this->dao->create($assunto);
+        $this->repository->create($assunto);
+    }
+
+    /**
+     * Update an Assunto.
+     *
+     * @param Assunto $assunto
+     * @param int @codAs
+     * @return void
+     */
+    public function update(Assunto $assunto, int $codAs): void
+    {
+        if (!$codAs) {
+            throw new DomainException('O assunto não pode ser editado pois não tem código');
+        }
+
+        if (!Assunto::find($codAs)->exists()) {
+            throw new DomainException('O assunto não pode ser editado pois não existe');
+        }
+
+        $this->repository->update($assunto, $codAs);
     }
 }

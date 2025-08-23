@@ -8,7 +8,8 @@ use BookRegistry\Assunto\Domain\Repository\AssuntoRepositoryInterface;
 use DomainException;
 
 beforeEach(function () {
-    $this->mockRepository = Mockery::mock(AssuntoRepositoryInterface::class);
+    $this->mockRepositoryInterface = Mockery::mock(AssuntoRepositoryInterface::class);
+    $this->mockRepository = Mockery::mock(AssuntoRepository::class);
     $this->service = new CreateAssuntoService($this->mockRepository);
 });
 

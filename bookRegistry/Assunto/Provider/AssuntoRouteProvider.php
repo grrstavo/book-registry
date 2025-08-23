@@ -19,6 +19,8 @@ class AssuntoRouteProvider extends RouteServiceProvider
             Route::post('/assuntos', [AssuntoController::class, 'store'])->name('assuntos.store');
             Route::get('/assuntos', [AssuntoController::class, 'index'])->name('assuntos.index');
             Route::get('/assuntos/create', [AssuntoController::class, 'create'])->name('assuntos.create');
+            Route::get('/assuntos/{codAs}/edit', [AssuntoController::class, 'edit'])->name('assuntos.edit');
+            Route::put('/assuntos/{codAs}', [AssuntoController::class, 'update'])->name('assuntos.update');
         });
     }
 }

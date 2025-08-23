@@ -13,4 +13,13 @@ interface AssuntoRepositoryInterface
      * @return void
      */
     public function create(Assunto $assunto): void;
+
+    /**
+     * Update an Assunto.
+     *
+     * @param Assunto $assunto
+     * @param int $codAs
+     * @return void
+     */
+    public function update(Assunto $assunto, int $codAs): void;
 }

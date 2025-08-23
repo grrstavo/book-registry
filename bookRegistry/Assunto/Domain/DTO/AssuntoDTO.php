@@ -26,7 +26,6 @@ readonly class AssuntoDTO
     public function toAssunto(): Assunto
     {
         return new Assunto([
-            'codAs' => $this->codAs,
             'Descricao' => $this->Descricao
         ]);
     }

@@ -8,6 +8,18 @@
 @stop
 
 @section('content')
+    @if(session('success'))
+        <x-adminlte-alert theme="success" title="Sucesso" dismissable>
+            {{ session('success') }}
+        </x-adminlte-alert>
+    @endif
+
+    @if(session('error'))
+        <x-adminlte-alert theme="danger" title="Erro" dismissable>
+            {{ session('error') }}
+        </x-adminlte-alert>
+    @endif
+
     @php
     $heads = [
         '#',
@@ -22,7 +34,7 @@
                 <td>{{ $assunto->codAs }}</td>
                 <td>{{ $assunto->Descricao }}</td>
                 <td>
-                    <button class="btn btn-xs btn-primary" title="Editar" onclick="window.location='{{}}'">
+                    <button class="btn btn-xs btn-primary" title="Editar" onclick="window.location='{{ route('assuntos.edit', $assunto->codAs) }}'">
                         <i class="fas fa-lg fa-edit"></i>
                     </button>
                 </td>
@@ -32,9 +44,4 @@
 
     {!! $assuntos->links('pagination::bootstrap-5') !!}
 
-    @if(session('success'))
-        <x-adminlte-alert theme="success" title="Sucesso" dismissable>
-            {{ session('success') }}
-        </x-adminlte-alert>
-    @endif
 @stop
