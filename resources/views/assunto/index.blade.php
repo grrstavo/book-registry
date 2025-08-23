@@ -1,7 +1,10 @@
 @extends('common.root')
 
 @section('content_header')
-    <h1>Assuntos</h1>
+    <div class="d-flex justify-content-between align-items-center">
+        <h1>Assuntos</h1>
+        <x-adminlte-button onclick="window.location='{{ route('assuntos.create') }}'" class="btn-flat text-end" label="Novo" theme="success" icon="fas fa-lg fa-save"/>
+    </div>
 @stop
 
 @section('content')
@@ -9,22 +12,17 @@
     $heads = [
         '#',
         'Descrição',
-        ['label' => 'Ações', 'no-export' => true, 'width' => 5],
-    ];
-
-    $config = [
-        'order' => [[0, 'asc']],
-        'columns' => [null, null, null, ['orderable' => false]],
+        ['label' => 'Ações', 'width' => 5],
     ];
     @endphp
 
-    <x-adminlte-datatable id="table1" :heads="$heads" :config="$config" striped hoverable with-buttons>
+    <x-adminlte-datatable id="assuntos" :heads="$heads" striped hoverable with-buttons>
         @foreach($assuntos as $assunto)
             <tr>
                 <td>{{ $assunto->codAs }}</td>
                 <td>{{ $assunto->Descricao }}</td>
                 <td>
-                    <button class="btn btn-xs btn-primary" title="Editar" onclick="window.location=''">
+                    <button class="btn btn-xs btn-primary" title="Editar" onclick="window.location='{{}}'">
                         <i class="fas fa-lg fa-edit"></i>
                     </button>
                 </td>

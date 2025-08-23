@@ -15,6 +15,10 @@ class AssuntoRouteProvider extends RouteServiceProvider
      */
     public function map(): void
     {
-        Route::post('/assuntos', [AssuntoController::class, 'store'])->name('assuntos.store');
+        Route::middleware('web')->group(function () {
+            Route::post('/assuntos', [AssuntoController::class, 'store'])->name('assuntos.store');
+            Route::get('/assuntos', [AssuntoController::class, 'index'])->name('assuntos.index');
+            Route::get('/assuntos/create', [AssuntoController::class, 'create'])->name('assuntos.create');
+        });
     }
 }
