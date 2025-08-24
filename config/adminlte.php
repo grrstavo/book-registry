@@ -303,19 +303,19 @@ return [
 
         // Sidebar items:
         [
+            'text' => 'Livros',
+            'url' => '/livros',
+            'icon' => 'far fa-fw fa-book',
+        ],
+        [
             'text' => 'Assuntos',
             'url' => '/assuntos',
-            'icon' => 'far fa-fw fa-file',
+            'icon' => 'far fa-fw fa-comment-dots',
         ],
         [
             'text' => 'Autores',
             'url' => '/autores',
-            'icon' => 'far fa-fw fa-file',
-        ],
-        [
-            'text' => 'Livros',
-            'url' => '/livros',
-            'icon' => 'far fa-fw fa-file',
+            'icon' => 'far fa-fw fa-signature',
         ],
     ],
 

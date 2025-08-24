@@ -4,9 +4,9 @@ namespace BookRegistry\Livro\Provider;
 
 use BookRegistry\Livro\Domain\Repository\LivroRepositoryInterface;
 use BookRegistry\Livro\Infrastructure\Repository\LivroRepository;
-use Illuminate\Foundation\Support\Providers\RouteServiceProvider;
+use Illuminate\Support\ServiceProvider;
 
-class LivroRepositoryProvider extends RouteServiceProvider
+class LivroRepositoryProvider extends ServiceProvider
 {
     /**
      * Repository bindings for the Livro module.

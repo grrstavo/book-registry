@@ -4,9 +4,9 @@ namespace BookRegistry\Assunto\Provider;
 
 use BookRegistry\Assunto\Domain\Repository\AssuntoRepositoryInterface;
 use BookRegistry\Assunto\Infrastructure\Repository\AssuntoRepository;
-use Illuminate\Foundation\Support\Providers\RouteServiceProvider;
+use Illuminate\Support\ServiceProvider;
 
-class AssuntoRepositoryProvider extends RouteServiceProvider
+class AssuntoRepositoryProvider extends ServiceProvider
 {
     /**
      * Repository bindings for the Assunto module.

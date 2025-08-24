@@ -4,9 +4,9 @@ namespace BookRegistry\Autor\Provider;
 
 use BookRegistry\Autor\Domain\Repository\AutorRepositoryInterface;
 use BookRegistry\Autor\Infrastructure\Repository\AutorRepository;
-use Illuminate\Foundation\Support\Providers\RouteServiceProvider;
+use Illuminate\Support\ServiceProvider;
 
-class AutorRepositoryProvider extends RouteServiceProvider
+class AutorRepositoryProvider extends ServiceProvider
 {
     /**
      * Repository bindings for the Autor module.
