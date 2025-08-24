@@ -8,10 +8,12 @@
         <testsuite name="Application Service">
             <directory suffix="Test.php">BookRegistry/Assunto/Test/Application/Service</directory>
             <directory suffix="Test.php">BookRegistry/Autor/Test/Application/Service</directory>
+            <directory suffix="Test.php">BookRegistry/Livro/Test/Application/Service</directory>
         </testsuite>
         <testsuite name="Domain">
             <directory suffix="Test.php">BookRegistry/Assunto/Test/Domain</directory>
             <directory suffix="Test.php">BookRegistry/Autor/Test/Domain</directory>
+            <directory suffix="Test.php">BookRegistry/Livro/Test/Domain</directory>
         </testsuite>
     </testsuites>
     <source>

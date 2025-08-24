@@ -47,6 +47,16 @@ class Livro extends Model
     ];
 
     /**
+     * Get the value of the book as a float.
+     *
+     * @return float
+     */
+    public function getValorToFloat(): float
+    {
+        return $this->Valor / 100;
+    }
+
+    /**
      * Create a new factory instance for the model.
      *
      * @return LivroFactory
@@ -73,9 +83,9 @@ class Livro extends Model
      * Get the authors associated with this book.
      *
      * This method defines a many-to-many relationship between books and authors
-     * through the 'Livro_Autor' pivot table.
+     * through the 'Livro_Livro' pivot table.
      *
-     * @return BelongsToMany<Autor>
+     * @return BelongsToMany<Livro>
      */
     public function autores(): BelongsToMany
     {
