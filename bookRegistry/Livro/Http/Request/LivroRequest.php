@@ -27,7 +27,11 @@ class LivroRequest extends FormRequest
             'editora' => 'required|string|max:40',
             'edicao' => 'required|integer',
             'anoPublicacao' => 'required|integer|min:1000|max:' . date('Y'),
-            'valor' => 'required|numeric|min:0'
+            'valor' => 'required|numeric|min:0',
+            'autores' => 'required|array',
+            'autores.*' => 'exists:autor,CodAu',
+            'assuntos' => 'required|array',
+            'assuntos.*' => 'exists:assunto,codAs',
         ];
     }
 
@@ -40,10 +44,10 @@ class LivroRequest extends FormRequest
     {
         return [
             'titulo.required' => 'O campo Título é obrigatório.',
-            'titulo.string' => 'O campo Título deve ser uma string.',
+            'titulo.string' => 'O campo Título deve ser do tipo texto.',
             'titulo.max' => 'O campo Título não pode exceder 40 caracteres.',
             'editora.required' => 'O campo Editora é obrigatório.',
-            'editora.string' => 'O campo Editora deve ser uma string.',
+            'editora.string' => 'O campo Editora deve ser do tipo texto.',
             'editora.max' => 'O campo Editora não pode exceder 40 caracteres.',
             'edicao.required' => 'O campo Edição é obrigatório.',
             'edicao.integer' => 'O campo Edição deve ser um número inteiro.',
@@ -53,7 +57,13 @@ class LivroRequest extends FormRequest
             'anoPublicacao.max' => 'O campo Ano de Publicação não pode ser maior que o ano atual.',
             'valor.required' => 'O campo Valor é obrigatório.',
             'valor.numeric' => 'O campo Valor deve ser um número.',
-            'valor.min' => 'O campo Valor não pode ser negativo.'
+            'valor.min' => 'O campo Valor não pode ser negativo.',
+            'autores.required' => 'O campo Autores é obrigatório.',
+            'autores.array' => 'O campo Autores deve ser uma lista.',
+            'assuntos.required' => 'O campo Assuntos é obrigatório.',
+            'assuntos.array' => 'O campo Assuntos deve ser uma lista.',
+            'autores.*.exists' => 'Um ou mais autores selecionados são inválidos.',
+            'assuntos.*.exists' => 'Um ou mais assuntos selecionados são inválidos.'
         ];
     }
 
@@ -69,8 +79,10 @@ class LivroRequest extends FormRequest
             editora: $this->input('editora'),
             edicao: $this->input('edicao'),
             anoPublicacao: $this->input('anoPublicacao'),
-            valor: str_replace(".", "", $this->input('valor')),
+            valor: str_replace('.', '', $this->input('valor')),
             codl: $this->route('codl'),
+            assuntos: $this->input('assuntos', []),
+            autores: $this->input('autores', [])
         );
     }
 }

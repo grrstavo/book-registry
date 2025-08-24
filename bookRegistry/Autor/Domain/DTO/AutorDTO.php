@@ -13,7 +13,7 @@ readonly class AutorDTO
      * @param string $nome
      */
     public function __construct(
-        public string $nome,
+        public string|null $nome = null,
         public int|null $codAu = null
     ) {
     }

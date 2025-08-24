@@ -2,7 +2,9 @@
 
 namespace BookRegistry\Livro\Domain\DTO;
 
+use BookRegistry\Assunto\Domain\DTO\AssuntoDTO;
 use BookRegistry\Livro\Domain\Model\Livro;
+use Illuminate\Support\Collection;
 
 readonly class LivroDTO
 {
@@ -21,7 +23,9 @@ readonly class LivroDTO
         public int|null $edicao = null,
         public int|null $anoPublicacao = null,
         public int|null $valor = null,
-        public int|null $codl = null
+        public int|null $codl = null,
+        public array|null $assuntos = null,
+        public array|null $autores = null,
     ) {
     }
 
@@ -32,12 +36,20 @@ readonly class LivroDTO
      */
     public function toLivro(): Livro
     {
-        return new Livro([
+        $livro = new Livro([
             'Titulo' => $this->titulo,
             'Editora' => $this->editora,
             'Edicao' => $this->edicao,
             'AnoPublicacao' => $this->anoPublicacao,
-            'Valor' => $this->valor
+            'Valor' => $this->valor,
         ]);
+
+        $assuntos = new Collection($this->assuntos);
+        $autores = new Collection($this->autores);
+
+        $livro->setRelation('assuntosCollection', $assuntos);
+        $livro->setRelation('autoresCollection', $autores);
+
+        return $livro;
     }
 }

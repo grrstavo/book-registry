@@ -3,6 +3,8 @@
 namespace BookRegistry\Livro\Http\Controller;
 
 use App\Http\Controllers\Controller;
+use BookRegistry\Assunto\Domain\Model\Assunto;
+use BookRegistry\Autor\Domain\Model\Autor;
 use BookRegistry\Livro\Application\Service\CreateLivroService;
 use BookRegistry\Livro\Application\Service\UpdateLivroService;
 use BookRegistry\Livro\Domain\Model\Livro;
@@ -46,7 +48,10 @@ class LivroController extends Controller
      */
     public function create(): View
     {
-        return view('livro.create');
+        $autores = Autor::all();
+        $assuntos = Assunto::all();
+
+        return view('livro.create', compact('autores', 'assuntos'));
     }
 
     /**
@@ -60,7 +65,10 @@ class LivroController extends Controller
             return redirect()->route('livros.index')->with('error', 'Livro não encontrado');
         }
 
-        return view('livro.edit', compact('livro'));
+        $autores = Autor::all();
+        $assuntos = Assunto::all();
+
+        return view('livro.edit', compact('livro', 'autores', 'assuntos'));
     }
 
     /**

@@ -1,5 +1,7 @@
 @extends('common.root')
 
+@section('plugins.Select2', true)
+
 @section('content_header')
     <div class="d-flex justify-content-between align-items-center">
         <h1>Novo Livro</h1>
@@ -21,6 +23,23 @@
         <x-adminlte-input name="edicao" label="Edição" placeholder="Digite o numero da edição" value="{{ old('edicao') }}"/>
         <x-adminlte-input name="anoPublicacao" label="Ano de Publicação" placeholder="Digite o ano de publicação" value="{{ old('anoPublicacao') }}"/>
         <x-adminlte-input name="valor" label="Valor" placeholder="Digite o valor" value="{{ old('valor') }}" id="valor"/>
+
+        <x-adminlte-select2 id="assuntos" name="assuntos[]" label="Assuntos" multiple>
+            @foreach($assuntos as $assunto)
+                <option {{ in_array($assunto->codAs, old('assuntos', [])) ? 'selected' : '' }} value="{{ $assunto->codAs }}">
+                    {{ $assunto->Descricao }}
+                </option>
+            @endforeach
+        </x-adminlte-select2>
+        
+        <x-adminlte-select2 id="autores" name="autores[]" label="Autores" multiple>
+            @foreach($autores as $autor)
+                <option {{ in_array($autor->CodAu, old('autores', [])) ? 'selected' : '' }} value="{{ $autor->CodAu }}">
+                    {{ $autor->Nome }}
+                </option>
+            @endforeach
+        </x-adminlte-select2>
+
         <x-adminlte-button class="btn-flat" type="submit" label="Salvar" theme="success" icon="fas fa-lg fa-save"/>
     </form>
 @stop

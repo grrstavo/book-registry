@@ -4,6 +4,7 @@ namespace BookRegistry\Livro\Infrastructure\Repository;
 
 use BookRegistry\Livro\Domain\Model\Livro;
 use BookRegistry\Livro\Domain\Repository\LivroRepositoryInterface;
+use Illuminate\Support\Collection;
 
 class LivroRepository implements LivroRepositoryInterface
 {
@@ -12,13 +13,43 @@ class LivroRepository implements LivroRepositoryInterface
      */
     public function create(Livro $livro): void
     {
-        Livro::query()->create([
+        $livroCreated = Livro::query()->create([
             'Titulo' => $livro->Titulo,
             'Editora' => $livro->Editora,
             'Edicao' => $livro->Edicao,
             'AnoPublicacao' => $livro->AnoPublicacao,
             'Valor' => $livro->Valor,
         ]);
+
+        if ($livro->relationLoaded('autoresCollection')) {
+            $this->syncAutores($livroCreated, $livro->autoresCollection);
+        }
+
+        if ($livro->relationLoaded('assuntosCollection')) {
+            $this->syncAssuntos($livroCreated, $livro->assuntosCollection);
+        }
+    }
+
+    /**
+     * Sync the authors for a given book.
+     *
+     * @param Livro $livro
+     * @param Collection $autores
+     */
+    private function syncAutores(Livro $livro, Collection $autores): void
+    {
+        $livro->autores()->sync($autores->all());
+    }
+
+    /**
+     * Sync the subjects for a given book.
+     *
+     * @param Livro $livro
+     * @param Collection $assuntos
+     */
+    private function syncAssuntos(Livro $livro, Collection $assuntos): void
+    {
+        $livro->assuntos()->sync($assuntos->all());
     }
 
     /**
@@ -32,6 +63,7 @@ class LivroRepository implements LivroRepositoryInterface
         $existingLivro->Edicao = $livro->Edicao;
         $existingLivro->AnoPublicacao = $livro->AnoPublicacao;
         $existingLivro->Valor = $livro->Valor;
+
         $existingLivro->save();
     }
 
