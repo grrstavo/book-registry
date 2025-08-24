@@ -11,6 +11,14 @@ class LivroRepository implements LivroRepositoryInterface
     /**
      * @inheritDoc
      */
+    public function findByCodl(int $codl): ?Livro
+    {
+        return Livro::find($codl);
+    }
+
+    /**
+     * @inheritDoc
+     */
     public function create(Livro $livro): void
     {
         $livroCreated = Livro::query()->create([
@@ -27,6 +35,29 @@ class LivroRepository implements LivroRepositoryInterface
 
         if ($livro->relationLoaded('assuntosCollection')) {
             $this->syncAssuntos($livroCreated, $livro->assuntosCollection);
+        }
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function update(Livro $livro, int $codl): void
+    {
+        $existingLivro = $this->findByCodl($codl);
+        $existingLivro->Titulo = $livro->Titulo;
+        $existingLivro->Editora = $livro->Editora;
+        $existingLivro->Edicao = $livro->Edicao;
+        $existingLivro->AnoPublicacao = $livro->AnoPublicacao;
+        $existingLivro->Valor = $livro->Valor;
+
+        $existingLivro->save();
+
+        if ($livro->relationLoaded('autoresCollection')) {
+            $this->syncAutores($existingLivro, $livro->autoresCollection);
+        }
+
+        if ($livro->relationLoaded('assuntosCollection')) {
+            $this->syncAssuntos($existingLivro, $livro->assuntosCollection);
         }
     }
 
@@ -50,28 +81,5 @@ class LivroRepository implements LivroRepositoryInterface
     private function syncAssuntos(Livro $livro, Collection $assuntos): void
     {
         $livro->assuntos()->sync($assuntos->all());
-    }
-
-    /**
-     * @inheritDoc
-     */
-    public function update(Livro $livro, int $codl): void
-    {
-        $existingLivro = $this->findByCodl($codl);
-        $existingLivro->Titulo = $livro->Titulo;
-        $existingLivro->Editora = $livro->Editora;
-        $existingLivro->Edicao = $livro->Edicao;
-        $existingLivro->AnoPublicacao = $livro->AnoPublicacao;
-        $existingLivro->Valor = $livro->Valor;
-
-        $existingLivro->save();
-    }
-
-    /**
-     * @inheritDoc
-     */
-    public function findByCodl(int $codl): ?Livro
-    {
-        return Livro::find($codl);
     }
 }
