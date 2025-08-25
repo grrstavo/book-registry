@@ -108,7 +108,6 @@ php artisan queue:work
 ### **Bibliotecas Especializadas**
 - **DomPDF**: Geração de relatórios em PDF
 - **Laravel Report Generator**: Geração avançada de relatórios
-- **Laravel Tinker**: REPL para interação com a aplicação
 
 ### **Infraestrutura**
 - **Nginx**: Servidor web de alta performance
