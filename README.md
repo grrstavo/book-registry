@@ -51,7 +51,7 @@ php artisan queue:work
 │ ◆ Edicao: INTEGER          │                    │ 📁 Livro_Autor_FKIndex1    │
 │ ◆ AnoPublicacao: VARCHAR(4)│                    │ 📁 Livro_Autor_FKIndex2    │
 └────────────────────────────┘                    └────────────────────────────┘
-           │                                              │
+           ▲                                              │
            │ N:N                                          │ N:1
            │                                              │
            ▼                                              ▼
