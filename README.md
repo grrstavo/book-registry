@@ -88,14 +88,6 @@ php artisan queue:work
                            └───────────────────────────────┘
 ```
 
-### **Relacionamentos e Estrutura**
-- **Rel_01**: Livro → Livro_Autor (1:N)
-- **Rel_02**: Autor → Livro_Autor (1:N) 
-- **Rel_03**: Livro → Livro_Assunto (1:N)
-- **Rel_04**: Assunto → Livro_Assunto (1:N)
-- **View**: `vw_relatorio_autor` - Relatório agregado de autores com estatísticas de livros
-- **Índices**: Foreign Key indexes para otimização de consultas
-
 ## Tecnologias Utilizadas
 
 ### **Backend**
