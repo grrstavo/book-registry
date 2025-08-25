@@ -4,6 +4,7 @@ namespace BookRegistry\Assunto\Http\Controller;
 
 use App\Http\Controllers\Controller;
 use BookRegistry\Assunto\Application\Service\CreateAssuntoService;
+use BookRegistry\Assunto\Application\Service\DeleteAssuntoService;
 use BookRegistry\Assunto\Application\Service\UpdateAssuntoService;
 use BookRegistry\Assunto\Domain\Model\Assunto;
 use BookRegistry\Assunto\Http\Request\AssuntoRequest;
@@ -23,7 +24,8 @@ class AssuntoController extends Controller
      */
     public function __construct(
         private readonly CreateAssuntoService $createService,
-        private readonly UpdateAssuntoService $updateService
+        private readonly UpdateAssuntoService $updateService,
+        private readonly DeleteAssuntoService $deleteService
     ) {
     }
 
@@ -47,6 +49,41 @@ class AssuntoController extends Controller
     public function create(): View
     {
         return view('assunto.create');
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @return RedirectResponse
+     */
+    public function destroy(int $id): RedirectResponse
+    {
+        if (!$assunto = Assunto::find($id)) {
+            return redirect()->route('assuntos.index')->with('error', 'Assunto não encontrado');
+        }
+
+        DB::beginTransaction();
+        try {
+            ($this->deleteService)($id);
+            DB::commit();
+        } catch (DomainException $e) {
+            DB::rollBack();
+            Log::error($e->getMessage(), $e->getTrace());
+
+            return redirect()->route('assuntos.index')->with('error', $e->getMessage());
+        } catch (QueryException $e) {
+            DB::rollBack();
+            Log::error($e->getMessage(), $e->getTrace());
+
+            return redirect()->route('assuntos.index')->with('error', 'Erro no banco de dados ao excluir assunto');
+        } catch (Exception $e) {
+            DB::rollBack();
+            Log::error($e->getMessage(), $e->getTrace());
+
+            return redirect()->route('assuntos.index')->with('error', 'Erro ao excluir assunto');
+        }
+
+        return redirect()->route('assuntos.index')->with('success', 'Assunto excluído com sucesso');
     }
 
     /**

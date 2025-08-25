@@ -34,4 +34,12 @@ class AssuntoRepository implements AssuntoRepositoryInterface
     {
         return Assunto::find($codAs);
     }
+
+    /**
+     * @inheritDoc
+     */
+    public function delete(int $codAs): void
+    {
+        Assunto::destroy($codAs);
+    }
 }

@@ -37,6 +37,13 @@
                     <button class="btn btn-xs btn-primary" title="Editar" onclick="window.location='{{ route('assuntos.edit', $assunto->codAs) }}'">
                         <i class="fas fa-lg fa-edit"></i>
                     </button>
+                    <form action="{{ route('assuntos.destroy', $assunto->codAs) }}" method="POST" style="display:inline;" onsubmit="return confirm('Tem certeza que deseja excluir este assunto?');">
+                        @csrf
+                        @method('DELETE')
+                        <button type="submit" class="btn btn-xs btn-danger" title="Excluir">
+                            <i class="fas fa-lg fa-trash"></i>
+                        </button>
+                    </form>
                 </td>
             </tr>
         @endforeach

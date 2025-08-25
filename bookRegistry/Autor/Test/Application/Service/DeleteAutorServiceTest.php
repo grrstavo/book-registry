@@ -1,8 +1,6 @@
 <?php
 
 use BookRegistry\Autor\Application\Service\DeleteAutorService;
-use BookRegistry\Autor\Domain\DTO\AutorDTO;
-use BookRegistry\Autor\Domain\Model\Autor;
 use BookRegistry\Autor\Domain\Repository\AutorRepository;
 use BookRegistry\Autor\Domain\Repository\AutorRepositoryInterface;
 

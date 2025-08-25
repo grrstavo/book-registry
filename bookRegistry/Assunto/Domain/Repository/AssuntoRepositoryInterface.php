@@ -30,4 +30,12 @@ interface AssuntoRepositoryInterface
      * @return Assunto|null
      */
     public function findByCodAs(int $codAs): ?Assunto;
+
+    /**
+     * Delete an Assunto.
+     *
+     * @param int $codAs
+     * @return void
+     */
+    public function delete(int $codAs): void;
 }

@@ -49,4 +49,18 @@ class AssuntoRepository
 
         $this->repository->update($assunto, $codAs);
     }
+
+    /**
+     * Delete an Assunto.
+     *
+     * @param Assunto $assunto
+     */
+    public function delete(int $codAs): void
+    {
+        if (!$this->repository->findByCodAs($codAs)) {
+            throw new DomainException('O Assunto não pode ser deletado pois não existe');
+        }
+
+        $this->repository->delete($codAs);
+    }
 }
