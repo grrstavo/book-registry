@@ -14,8 +14,8 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\View\View;
-use \DomainException;
-use \Exception;
+use DomainException;
+use Exception;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
 
 class AutorController extends Controller
@@ -39,7 +39,7 @@ class AutorController extends Controller
     {
         $autores = Autor::orderBy('CodAu', 'desc')->paginate(10);
         $reportExists = Storage::exists('reports/autor_report.pdf');
-        $lastModified = Storage::lastModified('reports/autor_report.pdf');
+        $lastModified = $reportExists ? Storage::lastModified('reports/autor_report.pdf') : null;
 
         return view('autor.index', compact('autores', 'reportExists', 'lastModified'));
     }

@@ -10,7 +10,7 @@
             </form>
 
             @if($reportExists)
-                <x-adminlte-button onclick="window.location='{{ route('autores.downloadReport') }}'" class="btn-flat text-end" label="Baixar Relatório ({{ date('Y-m-d H:i:s', $lastModified) }})" theme="info" icon="fas fa-lg fa-download"/>
+                <x-adminlte-button onclick="window.location='{{ route('autores.downloadReport') }}'" class="btn-flat text-end" label="Baixar Relatório ({{ date('d/m/Y H:i:s', $lastModified) }})" theme="info" icon="fas fa-lg fa-download"/>
             @endif
 
             <x-adminlte-button onclick="window.location='{{ route('autores.create') }}'" class="btn-flat text-end" label="Novo" theme="success" icon="fas fa-lg fa-save"/>
