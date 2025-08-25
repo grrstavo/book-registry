@@ -49,4 +49,18 @@ class AutorRepository
 
         $this->repository->update($autor, $codAu);
     }
+
+    /**
+     * Delete an Autor.
+     *
+     * @param Autor $autor
+     */
+    public function delete(int $codAu): void
+    {
+        if (!$this->repository->findByCodAu($codAu)) {
+            throw new DomainException('O autor não pode ser deletado pois não existe');
+        }
+
+        $this->repository->delete($codAu);
+    }
 }

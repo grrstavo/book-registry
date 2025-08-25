@@ -4,6 +4,7 @@ namespace BookRegistry\Autor\Http\Controller;
 
 use App\Http\Controllers\Controller;
 use BookRegistry\Autor\Application\Service\CreateAutorService;
+use BookRegistry\Autor\Application\Service\DeleteAutorService;
 use BookRegistry\Autor\Application\Service\UpdateAutorService;
 use BookRegistry\Autor\Domain\Model\Autor;
 use BookRegistry\Autor\Event\ReportRequested;
@@ -26,7 +27,8 @@ class AutorController extends Controller
      */
     public function __construct(
         private readonly CreateAutorService $createService,
-        private readonly UpdateAutorService $updateService
+        private readonly UpdateAutorService $updateService,
+        private readonly DeleteAutorService $deleteService
     ) {
     }
 
@@ -66,6 +68,41 @@ class AutorController extends Controller
         }
 
         return view('autor.edit', compact('autor'));
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @return RedirectResponse
+     */
+    public function destroy(int $id): RedirectResponse
+    {
+        if (!$autor = Autor::find($id)) {
+            return redirect()->route('autores.index')->with('error', 'Autor não encontrado');
+        }
+
+        DB::beginTransaction();
+        try {
+            ($this->deleteService)($id);
+            DB::commit();
+        } catch (DomainException $e) {
+            DB::rollBack();
+            Log::error($e->getMessage(), $e->getTrace());
+
+            return redirect()->route('autores.index')->with('error', $e->getMessage());
+        } catch (QueryException $e) {
+            DB::rollBack();
+            Log::error($e->getMessage(), $e->getTrace());
+
+            return redirect()->route('autores.index')->with('error', 'Erro no banco de dados ao excluir autor');
+        } catch (Exception $e) {
+            DB::rollBack();
+            Log::error($e->getMessage(), $e->getTrace());
+
+            return redirect()->route('autores.index')->with('error', 'Erro ao excluir autor');
+        }
+
+        return redirect()->route('autores.index')->with('success', 'Autor excluído com sucesso');
     }
 
     /**

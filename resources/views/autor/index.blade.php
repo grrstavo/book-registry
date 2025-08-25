@@ -48,6 +48,13 @@
                     <button class="btn btn-xs btn-primary" title="Editar" onclick="window.location='{{ route('autores.edit', $autor->CodAu) }}'">
                         <i class="fas fa-lg fa-edit"></i>
                     </button>
+                    <form action="{{ route('autores.destroy', $autor->CodAu) }}" method="POST" style="display:inline;" onsubmit="return confirm('Tem certeza que deseja excluir este autor?');">
+                        @csrf
+                        @method('DELETE')
+                        <button type="submit" class="btn btn-xs btn-danger" title="Excluir">
+                            <i class="fas fa-lg fa-trash"></i>
+                        </button>
+                    </form>
                 </td>
             </tr>
         @endforeach

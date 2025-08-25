@@ -30,4 +30,11 @@ interface AutorRepositoryInterface
      * @return Autor|null
      */
     public function findByCodAu(int $codAu): ?Autor;
+
+    /**
+     * Delete an Autor.
+     *
+     * @param int $codAu
+     */
+    public function delete(int $codAu): void;
 }

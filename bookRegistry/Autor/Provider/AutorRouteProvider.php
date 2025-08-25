@@ -23,6 +23,7 @@ class AutorRouteProvider extends RouteServiceProvider
             Route::get('/autores/create', [AutorController::class, 'create'])->name('autores.create');
             Route::get('/autores/{codAu}/edit', [AutorController::class, 'edit'])->name('autores.edit');
             Route::put('/autores/{codAu}', [AutorController::class, 'update'])->name('autores.update');
+            Route::delete('/autores/{codAu}', [AutorController::class, 'destroy'])->name('autores.destroy');
         });
     }
 }

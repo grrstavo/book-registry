@@ -34,4 +34,15 @@ class AutorRepository implements AutorRepositoryInterface
     {
         return Autor::find($codAu);
     }
+
+
+    /**
+     * @inheritDoc
+     */
+    public function delete(int $codAu): void
+    {
+        if ($existingAutor = $this->findByCodAu($codAu)) {
+            $existingAutor->delete();
+        }
+    }
 }
