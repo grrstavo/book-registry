@@ -44,6 +44,7 @@ php artisan queue:work
 ┌────────────────────────────┐                    ┌────────────────────────────┐
 │         Livro              │                    │      Livro_Autor           │
 ├────────────────────────────┤                    ├────────────────────────────┤
+|                            |                    | 🔑 id: INTEGER             |
 │ 🔑 Codl: INTEGER           │                    │ ▼ Livro_Codl: INTEGER (FK) │
 │ ◆ Titulo: VARCHAR(40)      │      N:N           │ ▼ Autor_CodAu: INTEGER (FK)│
 │ ◆ Editora: VARCHAR(40)     │◄──────────────────►│                            │
@@ -51,20 +52,21 @@ php artisan queue:work
 │ ◆ AnoPublicacao: VARCHAR(4)│                    │ 📁 Livro_Autor_FKIndex2    │
 └────────────────────────────┘                    └────────────────────────────┘
            │                                              │
-           │ N:N                                          │ 1:N
+           │ N:N                                          │ N:1
            │                                              │
            ▼                                              ▼
 ┌──────────────────────────────┐                    ┌─────────────────────────┐
 │      Livro_Assunto           │                    │         Autor           │
 ├──────────────────────────────┤                    ├─────────────────────────┤
-│ ▼ Livro_Codl: INTEGER (FK)   │                    │ 🔑 CodAu: INTEGER       │
-│ ▼ Assunto_codAs: INTEGER (FK)│                    │ ◆ Nome: VARCHAR(40)     │
-│                              │                    └─────────────────────────┘
+| 🔑 id: INTEGER               |                    │ 🔑 CodAu: INTEGER       │
+│ ▼ Livro_Codl: INTEGER (FK)   │                    │ ◆ Nome: VARCHAR(40)     │
+│ ▼ Assunto_codAs: INTEGER (FK)│                    └─────────────────────────┘
+│                              │
 │ 📁 Livro_Assunto_FKIndex1    │
 │ 📁 Livro_Assunto_FKIndex2    │
 └──────────────────────────────┘
            │
-           │ 1:N
+           │ N:1
            ▼
 ┌─────────────────────────┐
 │        Assunto          │
@@ -76,12 +78,12 @@ php artisan queue:work
                            ┌───────────────────────────────┐
                            │    vw_relatorio_autor         │
                            ├───────────────────────────────┤
-                           │ 👁️ autor_id: INTEGER          │
-                           │ 👁️ autor_nome: VARCHAR        │
-                           │ 👁️ total_livros: INTEGER      │
-                           │ 👁️ total_valor: DECIMAL       │
-                           │ 👁️ total_assuntos: INTEGER    │
-                           │ 👁️ media_valor: DECIMAL       │
+                           │  autor_id: INTEGER            │
+                           │  autor_nome: VARCHAR          │
+                           │  total_livros: INTEGER        │
+                           │  total_valor: DECIMAL         │
+                           │  total_assuntos: INTEGER      │
+                           │  media_valor: DECIMAL         │
                            └───────────────────────────────┘
 ```
 
