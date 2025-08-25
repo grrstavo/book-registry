@@ -3,7 +3,18 @@
 @section('content_header')
     <div class="d-flex justify-content-between align-items-center">
         <h1>Autores</h1>
-        <x-adminlte-button onclick="window.location='{{ route('autores.create') }}'" class="btn-flat text-end" label="Novo" theme="success" icon="fas fa-lg fa-save"/>
+        <div class="d-flex gap-2">
+            <form action="{{ route('autores.report') }}" method="POST">
+                @csrf
+                <x-adminlte-button type="submit" label="Gerar Relatório" theme="primary" class="btn-flat text-end" icon="fas fa-lg fa-list"/>
+            </form>
+
+            @if($reportExists)
+                <x-adminlte-button onclick="window.location='{{ route('autores.downloadReport') }}'" class="btn-flat text-end" label="Baixar Relatório ({{ date('Y-m-d H:i:s', $lastModified) }})" theme="info" icon="fas fa-lg fa-download"/>
+            @endif
+
+            <x-adminlte-button onclick="window.location='{{ route('autores.create') }}'" class="btn-flat text-end" label="Novo" theme="success" icon="fas fa-lg fa-save"/>
+        </div>
     </div>
 @stop
 

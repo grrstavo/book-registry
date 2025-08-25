@@ -6,14 +6,17 @@ use App\Http\Controllers\Controller;
 use BookRegistry\Autor\Application\Service\CreateAutorService;
 use BookRegistry\Autor\Application\Service\UpdateAutorService;
 use BookRegistry\Autor\Domain\Model\Autor;
+use BookRegistry\Autor\Event\ReportRequested;
 use BookRegistry\Autor\Http\Request\AutorRequest;
 use Illuminate\Database\QueryException;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\View\View;
 use \DomainException;
 use \Exception;
+use Symfony\Component\HttpFoundation\BinaryFileResponse;
 
 class AutorController extends Controller
 {
@@ -35,8 +38,10 @@ class AutorController extends Controller
     public function index(): View
     {
         $autores = Autor::orderBy('CodAu', 'desc')->paginate(10);
+        $reportExists = Storage::exists('reports/autor_report.pdf');
+        $lastModified = Storage::lastModified('reports/autor_report.pdf');
 
-        return view('autor.index', compact('autores'));
+        return view('autor.index', compact('autores', 'reportExists', 'lastModified'));
     }
 
     /**
@@ -151,5 +156,31 @@ class AutorController extends Controller
         }
 
         return redirect()->route('autores.index')->with('success', 'Autor editado com sucesso');
+    }
+
+    /**
+     * Handle the report generation.
+     *
+     * @return RedirectResponse
+     */
+    public function generateReport(): RedirectResponse
+    {
+        ReportRequested::dispatch();
+
+        return redirect()->route('autores.index')->with('success', 'Seu relatório será gerado em instantes, retorne à página para verificar se já está disponível');
+    }
+
+    /**
+     * Handle the report download.
+     *
+     * @return BinaryFileResponse|RedirectResponse
+     */
+    public function downloadReport(): BinaryFileResponse|RedirectResponse
+    {
+        if (!Storage::exists('reports/autor_report.pdf')) {
+            return redirect()->route('autores.index')->with('error', 'Relatório não encontrado. Por favor, gere o relatório primeiro.');
+        }
+
+        return response()->download(storage_path('app/private/reports/autor_report.pdf'));
     }
 }
