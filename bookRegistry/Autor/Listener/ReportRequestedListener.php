@@ -30,8 +30,7 @@ class ReportRequestedListener implements ShouldQueue
         try {
             ($this->service)();
         } catch (Exception $e) {
-            // $requestReport->update(['status' => 'failed']);
-            // Log::error($e->getMessage());
+            Log::error($e->getMessage());
         }
     }
 
