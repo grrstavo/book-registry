@@ -13,8 +13,8 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use Illuminate\View\View;
-use \DomainException;
-use \Exception;
+use DomainException;
+use Exception;
 
 class AssuntoController extends Controller
 {
@@ -52,6 +52,20 @@ class AssuntoController extends Controller
     }
 
     /**
+     * Show the form for creating a new resource.
+     *
+     * @return View|RedirectResponse
+     */
+    public function edit(int $id): View|RedirectResponse
+    {
+        if (!$assunto = Assunto::find($id)) {
+            return redirect()->route('assuntos.index')->with('error', 'Assunto não encontrado');
+        }
+
+        return view('assunto.edit', compact('assunto'));
+    }
+
+    /**
      * Remove the specified resource from storage.
      *
      * @return RedirectResponse
@@ -84,20 +98,6 @@ class AssuntoController extends Controller
         }
 
         return redirect()->route('assuntos.index')->with('success', 'Assunto excluído com sucesso');
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return View|RedirectResponse
-     */
-    public function edit(int $id): View|RedirectResponse
-    {
-        if (!$assunto = Assunto::find($id)) {
-            return redirect()->route('assuntos.index')->with('error', 'Assunto não encontrado');
-        }
-
-        return view('assunto.edit', compact('assunto'));
     }
 
     /**

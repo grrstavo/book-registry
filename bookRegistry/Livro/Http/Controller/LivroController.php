@@ -15,8 +15,8 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use Illuminate\View\View;
-use \DomainException;
-use \Exception;
+use DomainException;
+use Exception;
 
 class LivroController extends Controller
 {
@@ -57,6 +57,23 @@ class LivroController extends Controller
     }
 
     /**
+     * Show the form for creating a new resource.
+     *
+     * @return View|RedirectResponse
+     */
+    public function edit(int $id): View|RedirectResponse
+    {
+        if (!$livro = Livro::find($id)) {
+            return redirect()->route('livros.index')->with('error', 'Livro não encontrado');
+        }
+
+        $autores = Autor::all();
+        $assuntos = Assunto::all();
+
+        return view('livro.edit', compact('livro', 'autores', 'assuntos'));
+    }
+
+    /**
      * Remove the specified resource from storage.
      *
      * @return RedirectResponse
@@ -89,23 +106,6 @@ class LivroController extends Controller
         }
 
         return redirect()->route('livros.index')->with('success', 'Livro excluído com sucesso');
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return View|RedirectResponse
-     */
-    public function edit(int $id): View|RedirectResponse
-    {
-        if (!$livro = Livro::find($id)) {
-            return redirect()->route('livros.index')->with('error', 'Livro não encontrado');
-        }
-
-        $autores = Autor::all();
-        $assuntos = Assunto::all();
-
-        return view('livro.edit', compact('livro', 'autores', 'assuntos'));
     }
 
     /**
