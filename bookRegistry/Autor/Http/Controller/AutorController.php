@@ -77,7 +77,7 @@ class AutorController extends Controller
      */
     public function destroy(int $id): RedirectResponse
     {
-        if (!$autor = Autor::find($id)) {
+        if (!Autor::find($id)) {
             return redirect()->route('autores.index')->with('error', 'Autor não encontrado');
         }
 

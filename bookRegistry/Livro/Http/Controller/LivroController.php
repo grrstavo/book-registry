@@ -80,7 +80,7 @@ class LivroController extends Controller
      */
     public function destroy(int $id): RedirectResponse
     {
-        if (!$livro = Livro::find($id)) {
+        if (!Livro::find($id)) {
             return redirect()->route('livros.index')->with('error', 'Livro não encontrado');
         }
 

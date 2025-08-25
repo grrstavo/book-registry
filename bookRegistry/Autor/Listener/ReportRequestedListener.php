@@ -34,6 +34,11 @@ class ReportRequestedListener implements ShouldQueue
         }
     }
 
+    /**
+     * Register the listeners for the subscriber.
+     *
+     * @return array
+     */
     public function subscribe(): array
     {
         return [

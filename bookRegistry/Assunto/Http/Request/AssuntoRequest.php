@@ -23,7 +23,7 @@ class AssuntoRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'descricao' => 'required|string|max:40',
+            'descricao' => 'required|string|max:20',
             'codAs' => 'integer|exists:assuntos,codAs'
         ];
     }
@@ -38,7 +38,7 @@ class AssuntoRequest extends FormRequest
         return [
             'descricao.required' => 'O campo descrição é obrigatório',
             'descricao.string' => 'O campo descrição deve ser uma string',
-            'descricao.max' => 'O campo descrição deve ter no máximo 40 caracteres',
+            'descricao.max' => 'O campo descrição deve ter no máximo 20 caracteres',
             'codAs.integer' => 'O campo código deve ser um número inteiro',
             'codAs.exists' => 'O assunto com o código informado não existe'
         ];

@@ -72,7 +72,7 @@ class AssuntoController extends Controller
      */
     public function destroy(int $id): RedirectResponse
     {
-        if (!$assunto = Assunto::find($id)) {
+        if (!Assunto::find($id)) {
             return redirect()->route('assuntos.index')->with('error', 'Assunto não encontrado');
         }
 
