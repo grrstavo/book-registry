@@ -101,7 +101,6 @@ php artisan queue:work
 ### **Ferramentas de Desenvolvimento**
 - **Docker & Docker Compose**: Containerização da aplicação
 - **Pest 4.0**: Framework de testes moderno
-- **Laravel Pint**: Code style fixer
 - **Faker**: Geração de dados fictícios para testes
 
 ### **Bibliotecas Especializadas**
