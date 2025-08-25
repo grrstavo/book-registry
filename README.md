@@ -1,61 +1,128 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# Sistema de Registro de Livros
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+Sistema de gerenciamento de livros desenvolvido em Laravel com arquitetura limpa e padrões de design modernos.
 
-## About Laravel
+## Comandos de Instalação
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+```bash
+docker-compose up -d --build
+docker-compose exec app bash
+php artisan migrate --seed
+php artisan queue:work
+```
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+## Principais Funcionalidades
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+- **Gerenciamento de Livros**: Cadastro, edição, visualização e exclusão de livros
+- **Gestão de Autores**: Controle completo de autores com relacionamentos
+- **Categorização por Assuntos**: Sistema de classificação de livros por assuntos
+- **Relacionamentos Many-to-Many**: Livros podem ter múltiplos autores e assuntos
+- **Geração de Relatórios**: Relatórios em PDF com dados dos autores
+- **Interface Administrativa**: Interface web responsiva com AdminLTE
+- **Sistema de Validação**: Validação robusta de dados de entrada
+- **Seeders**: População automática do banco com dados de exemplo
 
-## Learning Laravel
+## Arquitetura e Padrões de Design
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+### **Domain-Driven Design (DDD)**
+- Estrutura modular organizada por domínios (`BookRegistry/`)
+- Separação clara entre `Autor`, `Livro` e `Assunto`
+- Cada domínio possui suas próprias camadas
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+### **Clean Architecture**
+- **Domain Layer**: Entidades e regras de negócio
+- **Application Layer**: Casos de uso e serviços de aplicação
+- **Infrastructure Layer**: Controllers, Requests e implementações
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+### **Padrões Implementados**
+- **Service Layer Pattern**: Serviços dedicados para lógica de negócio
+- **Repository Pattern**: Abstração de acesso a dados
+- **Request Validation**: Validação centralizada com Form Requests
+- **Event-Driven Architecture**: Sistema de eventos para relatórios
+- **Dependency Injection**: Injeção de dependências nativa do Laravel
 
-## Laravel Sponsors
+## Esquema Visual do Banco de Dados
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+```
+┌────────────────────────────┐                    ┌────────────────────────────┐
+│         Livro              │                    │      Livro_Autor           │
+├────────────────────────────┤                    ├────────────────────────────┤
+│ 🔑 Codl: INTEGER           │                    │ ▼ Livro_Codl: INTEGER (FK) │
+│ ◆ Titulo: VARCHAR(40)      │      N:N           │ ▼ Autor_CodAu: INTEGER (FK)│
+│ ◆ Editora: VARCHAR(40)     │◄──────────────────►│                            │
+│ ◆ Edicao: INTEGER          │                    │ 📁 Livro_Autor_FKIndex1    │
+│ ◆ AnoPublicacao: VARCHAR(4)│                    │ 📁 Livro_Autor_FKIndex2    │
+└────────────────────────────┘                    └────────────────────────────┘
+           │                                              │
+           │ N:N                                          │ 1:N
+           │                                              │
+           ▼                                              ▼
+┌──────────────────────────────┐                    ┌─────────────────────────┐
+│      Livro_Assunto           │                    │         Autor           │
+├──────────────────────────────┤                    ├─────────────────────────┤
+│ ▼ Livro_Codl: INTEGER (FK)   │                    │ 🔑 CodAu: INTEGER       │
+│ ▼ Assunto_codAs: INTEGER (FK)│                    │ ◆ Nome: VARCHAR(40)     │
+│                              │                    └─────────────────────────┘
+│ 📁 Livro_Assunto_FKIndex1    │
+│ 📁 Livro_Assunto_FKIndex2    │
+└──────────────────────────────┘
+           │
+           │ 1:N
+           ▼
+┌─────────────────────────┐
+│        Assunto          │
+├─────────────────────────┤
+│ 🔑 codAs: INTEGER       │
+│ ◆ Descricao: VARCHAR(20)│
+└─────────────────────────┘
 
-### Premium Partners
+                           ┌───────────────────────────────┐
+                           │    vw_relatorio_autor         │
+                           ├───────────────────────────────┤
+                           │ 👁️ autor_id: INTEGER          │
+                           │ 👁️ autor_nome: VARCHAR        │
+                           │ 👁️ total_livros: INTEGER      │
+                           │ 👁️ total_valor: DECIMAL       │
+                           │ 👁️ total_assuntos: INTEGER    │
+                           │ 👁️ media_valor: DECIMAL       │
+                           └───────────────────────────────┘
+```
 
-- **[Vehikl](https://vehikl.com)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Redberry](https://redberry.international/laravel-development)**
-- **[Active Logic](https://activelogic.com)**
+### **Relacionamentos e Estrutura**
+- **Rel_01**: Livro → Livro_Autor (1:N)
+- **Rel_02**: Autor → Livro_Autor (1:N) 
+- **Rel_03**: Livro → Livro_Assunto (1:N)
+- **Rel_04**: Assunto → Livro_Assunto (1:N)
+- **View**: `vw_relatorio_autor` - Relatório agregado de autores com estatísticas de livros
+- **Índices**: Foreign Key indexes para otimização de consultas
 
-## Contributing
+## Tecnologias Utilizadas
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+### **Backend**
+- **PHP 8.3**: Linguagem principal
+- **Laravel 12.0**: Framework web
+- **MySQL**: Sistema de gerenciamento de banco de dados
 
-## Code of Conduct
+### **Frontend**
+- **AdminLTE 3.15**: Template administrativo responsivo
+- **Bootstrap**: Framework CSS para interface
+- **Blade Templates**: Sistema de templates do Laravel
+- **Vite**: Build tool para assets frontend
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+### **Ferramentas de Desenvolvimento**
+- **Docker & Docker Compose**: Containerização da aplicação
+- **Xdebug**: Depuração e profiling de código
+- **Pest 4.0**: Framework de testes moderno
+- **Laravel Pint**: Code style fixer
+- **Faker**: Geração de dados fictícios para testes
 
-## Security Vulnerabilities
+### **Bibliotecas Especializadas**
+- **DomPDF**: Geração de relatórios em PDF
+- **Laravel Report Generator**: Geração avançada de relatórios
+- **Laravel Tinker**: REPL para interação com a aplicação
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
-
-## License
-
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+### **Infraestrutura**
+- **Nginx**: Servidor web de alta performance
+- **PHP-FPM**: FastCGI Process Manager
+- **Composer**: Gerenciador de dependências PHP
+- **NPM**: Gerenciador de pacotes JavaScript
