@@ -16,7 +16,7 @@ class DeleteAutorService
     }
 
     /**
-     * Handle the creation of a new Autor.
+     * Handle the deletion of an Autor
      *
      * @param int $codAu
      * @return void

@@ -15,12 +15,9 @@ php artisan queue:work
 
 - **Gerenciamento de Livros**: Cadastro, edição, visualização e exclusão de livros
 - **Gestão de Autores**: Controle completo de autores com relacionamentos
-- **Categorização por Assuntos**: Sistema de classificação de livros por assuntos
+- **Gestão de Assuntos**: Controle completo de Assuntos com relacionamentos
 - **Relacionamentos Many-to-Many**: Livros podem ter múltiplos autores e assuntos
 - **Geração de Relatórios**: Relatórios em PDF com dados dos autores
-- **Interface Administrativa**: Interface web responsiva com AdminLTE
-- **Sistema de Validação**: Validação robusta de dados de entrada
-- **Seeders**: População automática do banco com dados de exemplo
 
 ## Arquitetura e Padrões de Design
 
@@ -32,7 +29,7 @@ php artisan queue:work
 ### **Clean Architecture**
 - **Domain Layer**: Entidades e regras de negócio
 - **Application Layer**: Casos de uso e serviços de aplicação
-- **Infrastructure Layer**: Controllers, Requests e implementações
+- **Infrastructure Layer**: Repositories
 
 ### **Padrões Implementados**
 - **Service Layer Pattern**: Serviços dedicados para lógica de negócio
@@ -103,7 +100,6 @@ php artisan queue:work
 
 ### **Ferramentas de Desenvolvimento**
 - **Docker & Docker Compose**: Containerização da aplicação
-- **Xdebug**: Depuração e profiling de código
 - **Pest 4.0**: Framework de testes moderno
 - **Laravel Pint**: Code style fixer
 - **Faker**: Geração de dados fictícios para testes

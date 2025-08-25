@@ -30,4 +30,12 @@ interface LivroRepositoryInterface
      * @return Livro|null
      */
     public function findByCodl(int $codl): ?Livro;
+
+    /**
+     * Delete a Livro.
+     *
+     * @param int $codl
+     * @return void
+     */
+    public function delete(int $codl): void;
 }

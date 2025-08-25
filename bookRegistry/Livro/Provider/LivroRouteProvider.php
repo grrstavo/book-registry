@@ -21,6 +21,7 @@ class LivroRouteProvider extends RouteServiceProvider
             Route::get('/livros/create', [LivroController::class, 'create'])->name('livros.create');
             Route::get('/livros/{codl}/edit', [LivroController::class, 'edit'])->name('livros.edit');
             Route::put('/livros/{codl}', [LivroController::class, 'update'])->name('livros.update');
+            Route::delete('/livros/{codl}', [LivroController::class, 'destroy'])->name('livros.destroy');
         });
     }
 }

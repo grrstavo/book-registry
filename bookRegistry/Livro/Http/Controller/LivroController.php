@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use BookRegistry\Assunto\Domain\Model\Assunto;
 use BookRegistry\Autor\Domain\Model\Autor;
 use BookRegistry\Livro\Application\Service\CreateLivroService;
+use BookRegistry\Livro\Application\Service\DeleteLivroService;
 use BookRegistry\Livro\Application\Service\UpdateLivroService;
 use BookRegistry\Livro\Domain\Model\Livro;
 use BookRegistry\Livro\Http\Request\LivroRequest;
@@ -25,7 +26,8 @@ class LivroController extends Controller
      */
     public function __construct(
         private readonly CreateLivroService $createService,
-        private readonly UpdateLivroService $updateService
+        private readonly UpdateLivroService $updateService,
+        private readonly DeleteLivroService $deleteService
     ) {
     }
 
@@ -52,6 +54,41 @@ class LivroController extends Controller
         $assuntos = Assunto::all();
 
         return view('livro.create', compact('autores', 'assuntos'));
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @return RedirectResponse
+     */
+    public function destroy(int $id): RedirectResponse
+    {
+        if (!$livro = Livro::find($id)) {
+            return redirect()->route('livros.index')->with('error', 'Livro não encontrado');
+        }
+
+        DB::beginTransaction();
+        try {
+            ($this->deleteService)($id);
+            DB::commit();
+        } catch (DomainException $e) {
+            DB::rollBack();
+            Log::error($e->getMessage(), $e->getTrace());
+
+            return redirect()->route('livros.index')->with('error', $e->getMessage());
+        } catch (QueryException $e) {
+            DB::rollBack();
+            Log::error($e->getMessage(), $e->getTrace());
+
+            return redirect()->route('livros.index')->with('error', 'Erro no banco de dados ao excluir livro');
+        } catch (Exception $e) {
+            DB::rollBack();
+            Log::error($e->getMessage(), $e->getTrace());
+
+            return redirect()->route('livros.index')->with('error', 'Erro ao excluir livro');
+        }
+
+        return redirect()->route('livros.index')->with('success', 'Livro excluído com sucesso');
     }
 
     /**

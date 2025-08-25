@@ -40,6 +40,8 @@ class AssuntoRepository implements AssuntoRepositoryInterface
      */
     public function delete(int $codAs): void
     {
-        Assunto::destroy($codAs);
+        if ($existingAssunto = $this->findByCodAs($codAs)) {
+            $existingAssunto->delete();
+        }
     }
 }

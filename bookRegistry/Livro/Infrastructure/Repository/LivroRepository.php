@@ -82,4 +82,14 @@ class LivroRepository implements LivroRepositoryInterface
     {
         $livro->assuntos()->sync($assuntos->all());
     }
+
+    /**
+     * @inheritDoc
+     */
+    public function delete(int $codl): void
+    {
+        if ($existingLivro = $this->findByCodl($codl)) {
+            $existingLivro->delete();
+        }
+    }
 }

@@ -45,6 +45,13 @@
                     <button class="btn btn-xs btn-primary" title="Editar" onclick="window.location='{{ route('livros.edit', $livro->Codl) }}'">
                         <i class="fas fa-lg fa-edit"></i>
                     </button>
+                    <form action="{{ route('livros.destroy', $livro->Codl) }}" method="POST" style="display:inline;" onsubmit="return confirm('Tem certeza que deseja excluir este livro?');">
+                        @csrf
+                        @method('DELETE')
+                        <button type="submit" class="btn btn-xs btn-danger" title="Excluir">
+                            <i class="fas fa-lg fa-trash"></i>
+                        </button>
+                    </form>
                 </td>
             </tr>
         @endforeach

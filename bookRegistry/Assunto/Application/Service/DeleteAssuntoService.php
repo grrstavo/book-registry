@@ -16,7 +16,7 @@ class DeleteAssuntoService
     }
 
     /**
-     * Handle the creation of a new Assunto.
+     * Handle the deletion of an Assunto
      *
      * @param int $codAu
      * @return void

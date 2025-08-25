@@ -49,4 +49,19 @@ class LivroRepository
 
         $this->repository->update($livro, $codl);
     }
+
+    /**
+     * Delete a Livro.
+     *
+     * @param int $codl
+     * @return void
+     */
+    public function delete(int $codl): void
+    {
+        if (!$this->repository->findByCodl($codl)) {
+            throw new DomainException('O livro não pode ser excluído pois não existe');
+        }
+
+        $this->repository->delete($codl);
+    }
 }
